@@ -62,6 +62,32 @@
 
 </section>
 
+<!--  -->
+<section class="py-16 bg-gray-100">
+    <div class="container mx-auto flex flex-col md:flex-row items-center gap-12 px-6">
+        <!-- Image -->
+        <div class="w-full md:w-1/2">
+            <img src="https://images.pexels.com/photos/7942464/pexels-photo-7942464.jpeg?auto=compress&cs=tinysrgb&w=600" alt="About IST Alumni" class="w-full rounded-lg shadow-lg">
+        </div>
+
+        <!-- Text Content -->
+        <div class="w-full md:w-1/2 text-center md:text-left">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800">About IST Alumni Network</h2>
+            <p class="mt-4 text-gray-600">
+                The IST Alumni Network is a community that connects past students to foster lifelong relationships,
+                career opportunities, and mentorship. We aim to create a strong, engaged, and supportive alumni network.
+            </p>
+            <p class="mt-2 text-gray-600">
+                Join us to stay updated on events, networking opportunities, and ways to give back to IST!
+            </p>
+            <a href="#" class="mt-6 inline-block bg-orange-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-orange-500 transition">
+                Learn More
+            </a>
+        </div>
+    </div>
+</section>
+
+
 
 
 
