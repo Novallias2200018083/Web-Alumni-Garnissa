@@ -1,8 +1,8 @@
 @extends('layouts.website')
 
 @section('content')
-<!-- Events Section -->
-<section class="py-12 ">
+    <!-- Events Section -->
+    <section class="py-12 ">
         <div class="container mx-auto px-6 text-center">
             <!-- Section Heading -->
             <h2
@@ -52,13 +52,7 @@
                 </div>
             </div>
 
-            <!-- View All Events Button -->
-            <div class="mt-8">
-                <a href="#"
-                    class="bg-[#E82929] text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-[#c71f1f]">
-                    View All Events
-                </a>
-            </div>
+
         </div>
     </section>
 @endsection

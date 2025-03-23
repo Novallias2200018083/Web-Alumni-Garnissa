@@ -1,31 +1,19 @@
 @extends('layouts.website')
 
 @section('content')
-    
 <div class="container mx-auto px-6">
     <h2 class="text-3xl font-bold text-gray-800 mb-4">Upcoming Events</h2>
-    
-    <a href="{{ route('events.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded">Create Event</a>
-
-    @if(session('success'))
-        <div class="bg-green-500 text-white p-3 mt-2">{{ session('success') }}</div>
-    @endif
 
     <div class="grid md:grid-cols-3 gap-6 mt-6">
         @foreach ($events as $event)
             <div class="bg-white rounded-xl shadow-lg p-4">
+                @if ($event->image)
+                    <img src="{{ asset('storage/' . $event->image) }}" class="rounded-lg mb-3 w-full">
+                @endif
                 <h3 class="text-xl font-semibold text-gray-800">{{ $event->title }}</h3>
-                <p class="text-gray-600">{{ $event->description }}</p>
+                <p class="text-gray-600">{{ Str::limit($event->description, 100) }}</p>
                 <p class="text-gray-500"><i class="fas fa-calendar-alt text-red-500"></i> {{ $event->event_date }}</p>
-                
                 <a href="{{ route('events.show', $event) }}" class="text-blue-500">View Details</a>
-                <a href="{{ route('events.edit', $event) }}" class="text-yellow-500 ml-2">Edit</a>
-
-                <form action="{{ route('events.destroy', $event) }}" method="POST" class="inline">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="text-red-500 ml-2">Delete</button>
-                </form>
             </div>
         @endforeach
     </div>

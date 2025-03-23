@@ -2,69 +2,108 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Show all events for alumni (only their own events).
      */
     public function index()
     {
-        // $events = Event::all(); // Fetch all events
-        return view('events.index', compact('events'));
-    }
-
-    public function front()
-    {
-        
+        $events = Event::latest()->paginate(10);
+        return view('dashboard.admin.events.index', compact('events'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show all events for public UI.
+     */
+    public function front()
+    {
+        $events = Event::latest()->paginate(9);
+        return view('events.front', compact('events'));
+    }
+
+    /**
+     * Show the form for creating a new event.
      */
     public function create()
     {
-        //
+        return view('dashboard.admin.events.create');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created event.
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required',
+            'event_date' => 'required|date',
+            'image' => 'nullable|image|max:2048',
+        ]);
+
+        // Handle image upload
+        $imagePath = $request->file('image') ? $request->file('image')->store('events', 'public') : null;
+
+        // Create the event
+        Event::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'event_date' => $request->event_date,
+            'image' => $imagePath,
+            'user_id' => auth()->id(), // Assign event to admin
+        ]);
+
+        return redirect()->route('admin.events.index')->with('success', 'Event created successfully.');
     }
 
     /**
-     * Display the specified resource.
+     * Show the form for editing an event.
      */
-    public function show(string $id)
+    public function edit(Event $event)
     {
-        //
+        return view('dashboard.admin.events.edit', compact('event'));
+
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Update an existing event.
      */
-    public function edit(string $id)
+    public function update(Request $request, Event $event)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required',
+            'event_date' => 'required|date',
+            'image' => 'nullable|image|max:2048',
+        ]);
+
+        // Handle image update
+        if ($request->file('image')) {
+            $imagePath = $request->file('image')->store('events', 'public');
+            $event->update(['image' => $imagePath]);
+        }
+
+        // Update event details
+        $event->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'event_date' => $request->event_date,
+        ]);
+
+        return redirect()->route('admin.events.index')->with('success', 'Event updated successfully.');
     }
 
     /**
-     * Update the specified resource in storage.
+     * Delete an event.
      */
-    public function update(Request $request, string $id)
+    public function destroy(Event $event)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $event->delete();
+        return redirect()->route('admin.events.index')->with('success', 'Event deleted successfully.');
     }
 }
