@@ -27,6 +27,7 @@ Route::get('/about', function () {
 
 
 Route::get('/showEvents', [EventController::class, 'front'])->name('events.front');
+Route::get('/about', [AboutController::class, 'front'])->name('about.front');
 
 
 

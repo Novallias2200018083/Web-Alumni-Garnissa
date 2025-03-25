@@ -14,6 +14,13 @@ class AboutController extends Controller
         return view('dashboard.admin.about.index', compact('about'));
     }
 
+    public function front()
+    {
+         $about = About::first(); // Fetch About Us content
+         return view('dashboard.admin.about.front', compact('about')); // Return the frontend view
+    }
+
+
     public function edit()
     {
         $about = About::first();

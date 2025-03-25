@@ -39,7 +39,7 @@
                 <li><a href="/"
                         class="no-underline relative text-black after:content-[''] after:absolute after:left-0 after:bottom-[-4px] after:w-0 after:h-[2px] after:bg-[#E82929] after:transition-all after:duration-300 hover:after:w-full">Home</a>
                 </li>
-                <li><a href="/about"
+                <li><a href="{{ route('about.front') }}"
                         class="no-underline relative text-black after:content-[''] after:absolute after:left-0 after:bottom-[-4px] after:w-0 after:h-[2px] after:bg-[#E82929] after:transition-all after:duration-300 hover:after:w-full">About</a>
                 </li>
                 <li><a href="{{ route('events.front') }}"

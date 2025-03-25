@@ -1,4 +1,4 @@
-@extends('layouts.alumnidashboard')
+@extends('layouts.admindashboard')
 
 @section('content')
 <div class="container mx-auto px-6">

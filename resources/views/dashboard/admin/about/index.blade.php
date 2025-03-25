@@ -1,30 +1,50 @@
 @extends('layouts.admindashboard')
 
 @section('content')
-<div class="container mx-auto px-6">
-    <h2 class="text-3xl font-bold text-gray-800 mb-4">About Us</h2>
+<div class="container mx-auto px-6 py-10">
+    <!-- Page Heading -->
+    <h2 class="text-4xl font-bold text-gray-800 mb-6">About Us</h2>
 
     @if(session('success'))
-        <div class="bg-green-500 text-white p-3 mb-4 rounded">{{ session('success') }}</div>
+    <script>
+        Swal.fire({
+            title: "Success!",
+            text: "{{ session('success') }}",
+            icon: "success",
+            confirmButtonText: "OK"
+        });
+    </script>
     @endif
 
-    <div class="bg-white p-6 shadow-md rounded-lg">
+    <!-- About Section -->
+    <div class="bg-white p-8 shadow-lg rounded-xl max-w-4xl">
         @if($about)
-            <div class="mb-4">
-                <h3 class="text-2xl font-semibold text-gray-700">{{ $about->title }}</h3>
-                <p class="text-gray-600 mt-2">{{ $about->content }}</p>
+            <div class="mb-6">
+                <h3 class="text-3xl font-semibold text-gray-700">{{ $about->title }}</h3>
+                <p class="text-gray-600 mt-4 leading-relaxed">{{ $about->content }}</p>
             </div>
 
             @if($about->image)
-                <div class="mb-4">
-                    <img src="{{ asset('storage/' . $about->image) }}" alt="About Us Image" class="w-1/2 rounded-lg shadow-lg">
+                <div class="mb-6">
+                    <img src="{{ asset('storage/' . $about->image) }}" 
+                         alt="About Us Image" 
+                         class="w-full max-w-lg rounded-xl shadow-md transition-transform duration-500 hover:scale-105">
                 </div>
             @endif
 
-            <a href="{{ route('about.edit') }}" class="bg-blue-500 text-white px-4 py-2 rounded">Edit About Us</a>
+            <!-- Edit Button -->
+            <a href="{{ route('about.edit') }}" 
+               class="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md font-semibold transition-all duration-300 hover:bg-blue-700 hover:scale-105 inline-block">
+                Edit About Us
+            </a>
         @else
             <p class="text-gray-600">No About Us content found.</p>
-            <a href="{{ route('about.edit') }}" class="bg-blue-500 text-white px-4 py-2 rounded">Create Content</a>
+            <div class="mt-4">
+                <a href="{{ route('about.edit') }}" 
+                   class="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md font-semibold transition-all duration-300 hover:bg-blue-700 hover:scale-105 inline-block">
+                    Create Content
+                </a>
+            </div>
         @endif
     </div>
 </div>

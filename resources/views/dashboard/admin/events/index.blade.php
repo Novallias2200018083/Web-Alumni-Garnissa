@@ -7,7 +7,14 @@
         <a href="{{ route('events.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded">Create Event</a>
 
         @if(session('success'))
-            <div class="bg-green-500 text-white p-3 mt-2">{{ session('success') }}</div>
+       <script>
+        Swal.fire({
+            title: "Success!",
+            text: "{{ session('success') }}",
+            icon: "success",
+            confirmButtonText: "OK"
+         });
+        </script>
         @endif
 
         <div class="grid md:grid-cols-3 gap-6 mt-6">
