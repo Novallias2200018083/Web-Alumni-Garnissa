@@ -21,7 +21,7 @@ class EventFactory extends Factory
             'title' => $this->faker->sentence(5),
             'description' => $this->faker->paragraph(),
             'event_date' => $this->faker->dateTimeBetween('+1 week', '+6 months'),
-            'image' => 'events/default.jpg', // Change this if you want to use real images
+            'image' => 'events/default.jpg',
 
         ];
     }

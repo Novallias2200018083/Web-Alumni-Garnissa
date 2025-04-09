@@ -45,7 +45,7 @@
                 <li><a href="{{ route('events.front') }}"
                         class="no-underline relative text-black after:content-[''] after:absolute after:left-0 after:bottom-[-4px] after:w-0 after:h-[2px] after:bg-[#E82929] after:transition-all after:duration-300 hover:after:w-full">Events</a>
                 </li>
-                <li><a href="/blogs"
+                <li><a href="{{ route('blogs.front') }}"
                         class="no-underline relative text-black after:content-[''] after:absolute after:left-0 after:bottom-[-4px] after:w-0 after:h-[2px] after:bg-[#E82929] after:transition-all after:duration-300 hover:after:w-full">Blogs</a>
                 </li>
                 <li><a href="/contact"

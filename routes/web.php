@@ -1,5 +1,7 @@
 <?php
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\AlumniDashboardController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AboutController;
@@ -25,15 +27,13 @@ Route::get('/about', function () {
     return view('about');
 });
 
-
+// frontend routes
 Route::get('/showEvents', [EventController::class, 'front'])->name('events.front');
+Route::get('/showBlogs', [BlogController::class, 'front'])->name('blogs.front');
 Route::get('/about', [AboutController::class, 'front'])->name('about.front');
 
 
 
-Route::get('/blogs', function () {
-    return view('blog');
-});
 
 Route::get('/contact', function () {
     return view('contact');
@@ -43,14 +43,22 @@ Route::get('/contact', function () {
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard/admin', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
 
-    // events
-    Route::resource('events', controller: EventController::class);
 
     // about us
-    Route::get('/admin/about',[AboutController::class, 'index'])->name('about.index');
+    Route::get('/admin/about', [AboutController::class, 'index'])->name('about.index');
     Route::get('/admin/about/edit', [AboutController::class, 'edit'])->name('about.edit');
     Route::post('/admin/about/update', [AboutController::class, 'update'])->name('about.update');
-}); 
+    
+    // blogs
+    Route::resource('/admin/blogs', controller:BlogController::class);
+    // events
+    Route::resource('/admin/events', controller: EventController::class);
+    // announcements
+    Route::resource('/admin/announcements', AnnouncementController::class);
+
+
+
+});
 
 // Route::middleware(['auth', 'alumni'])->group(function () {
 //     Route::get('/dashboard/alumni', [AlumniDashboardController::class, 'index'])->name('alumni.dashboard');

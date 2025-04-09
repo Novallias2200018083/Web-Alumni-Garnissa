@@ -1,10 +1,14 @@
 @extends('layouts.admindashboard')
 
 @section('content')
-    <div class="container mx-auto px-6">
-        <h2 class="text-3xl font-bold text-gray-800 mb-4">My Events</h2>
-
-        <a href="{{ route('events.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded">Create Event</a>
+<div class="container mx-auto px-6">
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-3xl font-bold text-gray-800">My Events</h2>
+        <a href="{{ route('events.create') }}"
+           class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow">
+            + Add Events
+        </a>
+    </div>
 
         @if(session('success'))
        <script>
