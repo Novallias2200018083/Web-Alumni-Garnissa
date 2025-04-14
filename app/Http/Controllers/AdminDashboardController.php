@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Announcement;
+use App\Models\Event;
+use App\Models\Blog;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminDashboardController extends Controller
@@ -11,7 +15,15 @@ class AdminDashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard.admin.index');
+        return view('dashboard.admin.index', [
+            'userCount' => User::count(),
+            'blogCount' => Blog::count(),
+            'eventCount' => Event::count(),
+            'announcementCount' => Announcement::count(),
+            'latestBlog' => Blog::latest()->first(),
+            'latestEvent' => Event::latest()->first(),
+            'latestAnnouncement' => Announcement::latest()->first(),
+        ]);
     }
 
     /**

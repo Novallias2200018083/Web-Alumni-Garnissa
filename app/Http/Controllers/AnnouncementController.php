@@ -16,6 +16,18 @@ class AnnouncementController extends Controller
         $announcements = Announcement::where('is_active', true)->latest()->paginate(5);
         return view('dashboard.admin.announcements.index', compact('announcements'));
     }
+        /**
+     * Show all announcements for public UI.
+     */
+    public function front()
+    {
+        $announcements = Announcement::where('is_active', true)
+            ->latest()
+            ->paginate(9); 
+
+        return view('dashboard.admin.announcements.front', compact('announcements'));
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -36,10 +48,16 @@ class AnnouncementController extends Controller
             'published_at' => 'nullable|date',
         ]);
 
-        Announcement::create($request->only('title', 'description', 'published_at'));
+        Announcement::create([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'published_at' => $request->input('published_at'),
+            'is_active' => $request->boolean('is_active'),
+        ]);
 
         return redirect()->route('announcements.index')->with('success', 'Announcement created successfully.');
     }
+
 
     /**
      * Display the specified resource.
@@ -48,7 +66,7 @@ class AnnouncementController extends Controller
     {
         // Get the announcement by ID
         $announcement = Announcement::findOrFail($id);
-        return view('announcements.show', compact('announcement'));
+        return view('dashboard.admin.announcements.show', compact('announcement'));
     }
 
     /**
@@ -73,10 +91,17 @@ class AnnouncementController extends Controller
         ]);
 
         $announcement = Announcement::findOrFail($id);
-        $announcement->update($request->only('title', 'description', 'published_at'));
+
+        $announcement->update([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'published_at' => $request->input('published_at'),
+            'is_active' => $request->boolean('is_active'),
+        ]);
 
         return redirect()->route('announcements.index')->with('success', 'Announcement updated successfully.');
     }
+
 
     /**
      * Remove the specified resource from storage.

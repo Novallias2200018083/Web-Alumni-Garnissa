@@ -1,8 +1,10 @@
 @extends('layouts.website')
 
 @section('content')
-    <div class="container mx-auto px-6">
-        <h2 class="text-3xl font-bold text-gray-800 mb-4">Latest Blogs</h2>
+    <div class="container mx-auto px-6 text-center">
+    <h2 class="text-4xl font-bold text-gray-800 mb-8 transition-all duration-300 hover:text-[#E82929] hover:underline underline-offset-8">
+            Latest Blogs
+        </h2>
 
         <div class="grid md:grid-cols-3 gap-6 mt-6">
             @foreach ($blogs as $blog)

@@ -18,9 +18,11 @@
             <ul class="space-y-4">
                 <li><a href="{{ route('admin.dashboard') }}" class="block p-3 rounded-lg hover:bg-red-500">
                         <i class="fas fa-home"></i> Dashboard</a></li>
-                <a href="{{ route('about.index') }}" class="block p-3 rounded-lg hover:bg-red-500">
-                    <i class="fas fa-info-circle"></i> Manage About Us
-                </a>
+                <li><a href="{{ route('users.index') }}" class="block p-3 rounded-lg hover:bg-red-500">
+                        <i class="fas fa-users"></i> Users</a></li>
+                <li><a href="{{ route('about.index') }}" class="block p-3 rounded-lg hover:bg-red-500">
+                        <i class="fas fa-info-circle"></i> Manage About Us
+                    </a></li>
 
                 <li><a href="/admin/blogs" class="block p-3 rounded-lg hover:bg-red-500"> <i
                             class="fas fa-info-circle"></i> Blogs</a></li>

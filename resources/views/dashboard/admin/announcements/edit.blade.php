@@ -27,9 +27,16 @@
 
             <div class="mb-4">
                 <label for="is_active" class="block text-gray-700 text-sm font-bold mb-2">Active</label>
-                <input type="checkbox" name="is_active" class="rounded" {{ $announcement->is_active ? 'checked' : '' }}>
+
+                <!-- Hidden fallback if checkbox is unchecked -->
+                <input type="hidden" name="is_active" value="0">
+
+                <!-- Actual checkbox that overrides if checked -->
+                <input type="checkbox" name="is_active" id="is_active" class="rounded" value="1" {{ old('is_active', $announcement->is_active) ? 'checked' : '' }}>
+
                 <span class="text-gray-600 text-sm">Check to make the announcement active</span>
             </div>
+
 
 
             <div class="mb-4">

@@ -23,7 +23,7 @@ class EventController extends Controller
     public function front()
     {
         $events = Event::latest()->paginate(9);
-        return view('events.front', compact('events'));
+        return view('dashboard.admin.events.front', compact('events'));
     }
 
     /**
