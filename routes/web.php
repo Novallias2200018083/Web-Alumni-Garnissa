@@ -7,8 +7,9 @@ use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AlumniProfileController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\InviteRegisterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,6 +49,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     // Users management
     Route::resource('admin/users', UserController::class);
+    // 
+    Route::resource('/admin/users', AdminUserController::class);
+
     // about us
     Route::get('/admin/about', [AboutController::class, 'index'])->name('about.index');
     Route::get('/admin/about/edit', [AboutController::class, 'edit'])->name('about.edit');
@@ -60,7 +64,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
     // announcements
     Route::resource('/admin/announcements', AnnouncementController::class);
 
-    Route::get('register/complete/{email}', [RegisterController::class, 'completeRegistration'])->name('register.complete');
+    // This route is for showing the registration completion form.
+    Route::get('register/complete/{email}', [InviteRegisterController::class, 'completeRegistration'])->name('register.complete');
+
+    // This route is for handling the form submission to complete the registration.
+    Route::post('register/complete/{email}', [InviteRegisterController::class, 'postCompleteRegistration'])->name('register.complete.post');
+
 
 
 });

@@ -10,6 +10,17 @@
         </a>
     </div>
 
+    @if(session('success'))
+       <script>
+        Swal.fire({
+            title: "Success!",
+            text: "{{ session('success') }}",
+            icon: "success",
+            confirmButtonText: "OK"
+         });
+        </script>
+        @endif
+
     <div class="grid md:grid-cols-3 gap-6 mt-6">
         @foreach ($announcements as $announcement)
         <div class="bg-white rounded-xl shadow-lg p-4">

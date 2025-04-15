@@ -15,7 +15,7 @@ class AdminUserController extends Controller
     public function index()
     {
         $users = User::all();  
-        return view('admin.users.index', compact('users'));
+        return view('dashboard.admin.users.index', compact('users'));
     }
 
     /**
@@ -41,7 +41,7 @@ class AdminUserController extends Controller
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
-            'password' => null,  
+            'password' => '',  
             'is_active' => false, 
         ]);
 
@@ -88,7 +88,7 @@ class AdminUserController extends Controller
         $user->update($validated);
 
         
-        return redirect()->route('admin.users.index')->with('success', 'User details updated successfully.');
+        return redirect()->route('users.index')->with('success', 'User details updated successfully.');
     }
 
     /**
@@ -101,6 +101,6 @@ class AdminUserController extends Controller
         $user->delete();
 
        
-        return redirect()->route('admin.users.index')->with('success', 'User deleted successfully.');
+        return redirect()->route('users.index')->with('success', 'User deleted successfully.');
     }
 }

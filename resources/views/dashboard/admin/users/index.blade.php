@@ -1,15 +1,27 @@
 @extends('layouts.admindashboard')
 
 @section('content')
-<h2 class="text-xl font-bold mb-4">All Users</h2>
+<div class="container mx-auto px-6">
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-3xl font-bold text-gray-800">All Users</h2>
+        <a href="{{ route('users.create') }}"
+           class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow">
+            + Add User
+        </a>
+    </div>
 
-<a href="{{ route('users.create') }}" class="btn btn-primary mb-3">Add New User</a>
+    @if(session('success'))
+       <script>
+        Swal.fire({
+            title: "Success!",
+            text: "{{ session('success') }}",
+            icon: "success",
+            confirmButtonText: "OK"
+         });
+        </script>
+        @endif
 
-@if(session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
-@endif
-
-<table class="table-auto w-full border-collapse">
+<table class="table-auto w-full border-collapse text-left">
     <thead>
         <tr class="bg-gray-100">
             <th class="p-2 border">#</th>
@@ -25,15 +37,19 @@
             <td class="p-2 border">{{ $user->name }}</td>
             <td class="p-2 border">{{ $user->email }}</td>
             <td class="p-2 border">
-                <a href="{{ route('users.edit', $user->id) }}" class="text-blue-500">Edit</a> |
+                <a href="{{ route('users.edit', $user->id) }}" class="text-blue-500 hover:underline">Edit</a>
+                |
                 <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure?')">
-                    @csrf @method('DELETE')
-                    <button type="submit" class="text-red-500">Delete</button>
+                    @csrf 
+                    @method('DELETE')
+                    <button type="submit" class="text-red-500 hover:underline">Delete</button>
                 </form>
             </td>
         </tr>
         @endforeach
     </tbody>
 </table>
+
+
 
 @endsection

@@ -1,7 +1,7 @@
-<p>Hello {{ $name }},</p>
+<h2>Hello {{ $name }},</h2>
 
-<p>Thank you for being a part of our alumni network! Please complete your registration by setting your password and completing your profile.</p>
+<p>You’ve been invited to join the IST Alumni Network. Please complete your registration by clicking the link below:</p>
 
-<p><a href="{{ $registrationLink }}">Complete Registration</a></p>
+<p><a href="{{ $registrationLink }}">{{ $registrationLink }}</a></p>
 
-<p>Regards, <br> Alumni Network</p>
+<p>Thank you!</p>

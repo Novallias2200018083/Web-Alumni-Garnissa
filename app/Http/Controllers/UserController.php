@@ -44,7 +44,7 @@ class UserController extends Controller
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
-            'password' => null,  
+            'password' => '',  
             'is_active' => false, 
         ]);
 
@@ -104,6 +104,6 @@ class UserController extends Controller
         $user->delete();
 
        
-        return redirect()->route('admin.users.index')->with('success', 'User deleted successfully.');
+        return redirect()->route('dashboard.admin.users.index')->with('success', 'User deleted successfully.');
     }
 }

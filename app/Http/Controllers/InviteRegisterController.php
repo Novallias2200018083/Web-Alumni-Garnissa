@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class RegisterController extends Controller
+class InviteRegisterController extends Controller
 {
     public function completeRegistration($email)
     {
@@ -23,7 +23,7 @@ class RegisterController extends Controller
     {
         $user = User::where('email', $email)->first();
 
-        if (!$user || $user->is_active) {
+        if (!$user || $user->email_verified_at !== null) {
             return redirect()->route('login');
         }
 
@@ -32,11 +32,13 @@ class RegisterController extends Controller
             'password' => 'required|string|min:8|confirmed',
         ]);
 
+        // Update the user's password and mark them as verified
         $user->password = bcrypt($validated['password']);
-        $user->is_active = true;  // Set user as active once registration is complete
+        $user->email_verified_at = now();  // Set the verification timestamp
         $user->save();
 
         return redirect()->route('login')->with('success', 'Registration complete. You can now log in.');
     }
+
 }
 
