@@ -6,10 +6,13 @@ use App\Http\Controllers\AlumniDashboardController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AlumniProfileController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AlumniEventController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AlumniBlogController;
+use App\Http\Controllers\AlumniAnnouncementController;
 use App\Http\Controllers\InviteRegisterController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,9 +26,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/', [HomeController::class, 'index']);
+
 Route::get('/about', function () {
     return view('about');
 });
@@ -35,6 +41,8 @@ Route::get('/showEvents', [EventController::class, 'front'])->name('events.front
 Route::get('/showBlogs', [BlogController::class, 'front'])->name('blogs.front');
 Route::get('/showAnnouncements', [AnnouncementController::class, 'front'])->name('announcements.front');
 Route::get('/about', [AboutController::class, 'front'])->name('about.front');
+// Route::get('/', [AlumniProfileController::class, 'front'])->name('welcome');
+
 
 
 
@@ -74,9 +82,23 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 });
 
-// Route::middleware(['auth', 'alumni'])->group(function () {
-//     Route::get('/dashboard/alumni', [AlumniDashboardController::class, 'index'])->name('alumni.dashboard');
-// });
+Route::middleware(['auth', 'alumni'])->group(function () {
+    Route::get('/dashboard/alumni', [AlumniDashboardController::class, 'index'])->name('alumni.dashboard');
+
+    // Profile management
+    Route::get('/alumni/profile', [AlumniProfileController::class, 'show'])->name('alumni.profile.show');
+    Route::get('/alumni/profile/edit', [AlumniProfileController::class, 'edit'])->name('alumni.profile.edit');
+    Route::put('/alumni/profile', [AlumniProfileController::class, 'update'])->name('alumni.profile.update');
+
+    // events 
+    Route::get('/alumni/events', [AlumniEventController::class, 'index'])->name('alumni.events.index');
+    // Blogs
+    Route::get('/alumni/blogs', [AlumniBlogController::class, 'index'])->name('alumni.blogs.index');
+
+    // Announcements
+    Route::get('/alumni/announcements', [AlumniAnnouncementController::class, 'index'])->name('alumni.announcements.index');
+
+});
 
 
 

@@ -17,6 +17,9 @@ return new class extends Migration {
             $table->text('description');
             $table->string('image')->nullable();
             $table->date('event_date');
+            $table->string('location'); 
+            $table->time('event_time'); 
+            $table->boolean('rsvp_required')->default(true); 
             $table->timestamps();
         });
     }

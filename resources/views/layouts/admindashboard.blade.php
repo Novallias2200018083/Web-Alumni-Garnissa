@@ -25,7 +25,7 @@
                     </a></li>
 
                 <li><a href="/admin/blogs" class="block p-3 rounded-lg hover:bg-red-500"> <i
-                            class="fas fa-info-circle"></i> Blogs</a></li>
+                            class="fas fa-blog mr-2"></i> Blogs</a></li>
                 <li><a href="{{ route('events.index') }}" class="block p-3 rounded-lg hover:bg-red-500">
                         <i class="fas fa-calendar"></i> Events</a></li>
                 <li><a href="/admin/announcements" class="block p-3 rounded-lg hover:bg-red-500"> <i

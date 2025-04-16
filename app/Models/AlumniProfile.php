@@ -5,29 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Event extends Model
+class AlumniProfile extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'user_id',
-        'title',
-        'description',
+        'phone',
+        'address',
+        'graduation_year',
+        'bio',
         'image',
-        'event_date',
-        'location',
-        'event_time',
-        'rsvp_required',
-
     ];
+    
 
-    /**
-     * Define the relationship: An event belongs to a user.
-     */
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
-    
 
 }

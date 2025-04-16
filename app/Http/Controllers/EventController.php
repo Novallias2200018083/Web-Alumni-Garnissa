@@ -43,6 +43,9 @@ class EventController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required',
             'event_date' => 'required|date',
+            'event_time' => 'required|date_format:H:i', 
+            'location' => 'required|string|max:255', 
+            'rsvp_required' => 'required|boolean', 
             'image' => 'nullable|image|max:2048',
         ]);
 
@@ -54,8 +57,11 @@ class EventController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'event_date' => $request->event_date,
+            'event_time' => $request->event_time,
+            'location' => $request->location, 
+            'rsvp_required' => $request->rsvp_required, 
             'image' => $imagePath,
-            'user_id' => auth()->id(), // Assign event to admin
+            'user_id' => auth()->id(), 
         ]);
 
         return redirect()->route('events.index')->with('success', 'Event created successfully.');
@@ -67,7 +73,6 @@ class EventController extends Controller
     public function edit(Event $event)
     {
         return view('dashboard.admin.events.edit', compact('event'));
-
     }
 
     /**
@@ -79,6 +84,9 @@ class EventController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required',
             'event_date' => 'required|date',
+            'event_time' => 'required|date_format:H:i', 
+            'location' => 'required|string|max:255', 
+            'rsvp_required' => 'required|boolean', 
             'image' => 'nullable|image|max:2048',
         ]);
 
@@ -93,6 +101,9 @@ class EventController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'event_date' => $request->event_date,
+            'event_time' => $request->event_time, 
+            'location' => $request->location, 
+            'rsvp_required' => $request->rsvp_required, 
         ]);
 
         return redirect()->route('events.index')->with('success', 'Event updated successfully.');

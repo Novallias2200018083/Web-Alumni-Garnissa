@@ -36,7 +36,7 @@
                         {{ $blog->published_at ? \Carbon\Carbon::parse($blog->published_at)->format('M d, Y') : 'Not set' }}
                     </p>
 
-                    <p class="text-gray-600 flex-grow">{{ Str::limit(strip_tags($blog->description), 120) }}</p>
+                    <p class="text-gray-600 flex-grow">{{(strip_tags($blog->description)) }}</p>
 
                     <div class="flex justify-between items-center mt-4">
                         <a href="{{ route('blogs.edit', $blog->id) }}" class="text-yellow-500 hover:underline">Edit</a>

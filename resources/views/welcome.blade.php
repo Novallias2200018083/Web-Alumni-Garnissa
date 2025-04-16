@@ -102,6 +102,47 @@
     </div>
 </section>
 
+<div class="container mx-auto px-6 py-8">
+    <h1 class="text-4xl font-extrabold text-gray-900 mb-8 text-center">All Alumni Profiles</h1>
+
+    @if($users->isEmpty())
+        <p class="text-center text-lg text-gray-500">No alumni profiles available.</p>
+    @else
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            @foreach($users as $user)
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 hover:shadow-lg transition duration-300">
+                    <!-- Profile Image -->
+                    <div class="flex justify-center p-4 bg-gray-50">
+                        <img src="{{ optional($user->alumniProfile)->image ? asset('storage/' . $user->alumniProfile->image) : 'https://images.pexels.com/photos/7944131/pexels-photo-7944131.jpeg?auto=compress&cs=tinysrgb&w=600' }}"
+                             alt="Profile Image"
+                             class="w-32 h-32 object-cover rounded-full border-4 border-indigo-500 shadow-md">
+                    </div>
+
+                    <!-- Profile Info -->
+                    <div class="px-6 pb-6">
+                        <h3 class="text-xl font-semibold text-rose-800 mb-2">{{ $user->name }}</h3>
+                        <p class="text-gray-700 text-sm mb-1"><strong>Email:</strong> {{ $user->email }}</p>
+                        @if($user->alumniProfile)
+                            <p class="text-gray-700 text-sm mb-1"><strong>Phone:</strong> {{ $user->alumniProfile->phone ?? 'Not provided' }}</p>
+                            <p class="text-gray-700 text-sm mb-1"><strong>Address:</strong> {{ $user->alumniProfile->address ?? 'Not provided' }}</p>
+                            <p class="text-gray-700 text-sm mb-1"><strong>Graduation Year:</strong> {{ $user->alumniProfile->graduation_year ?? 'Not provided' }}</p>
+                            <p class="text-gray-700 text-sm mt-3"><strong>Bio:</strong><br>
+                                <span class="block mt-1 text-gray-600">{{ $user->alumniProfile->bio ?? 'Not provided' }}</span>
+                            </p>
+                        @else
+                            <p class="text-gray-600 text-sm">No alumni profile available</p>
+                        @endif
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    @endif
+</div>
+
+
+
+
+
     <!-- Mission, Vision & Why Join Us Section -->
     <section class="py-12 relative mt-5 ">
         <div class="container mx-auto px-6 text-center">
@@ -157,64 +198,37 @@
 
 <!-- Events Section -->
 <section class="py-12">
-        <div class="container mx-auto px-6 text-center">
-            <!-- Section Heading -->
-            <h2
-                class="text-4xl font-bold text-gray-800 mb-8 transition-all duration-300 hover:text-[#E82929] hover:underline underline-offset-8">
-                Upcoming Events
-            </h2>
+    <div class="container mx-auto px-6 text-center">
+        <!-- Section Heading -->
+        <h2 class="text-4xl font-bold text-gray-800 mb-8 transition-all duration-300 hover:text-[#E82929] hover:underline underline-offset-8">
+            Upcoming Events
+        </h2>
 
+        <!-- Event Cards -->
+        @if($events->isEmpty())
+            <p class="text-xl text-gray-600">No upcoming events at the moment.</p>
+        @else
             <div class="grid md:grid-cols-3 gap-6">
-                <!-- Event 1 -->
-                <div
-                    class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-500 hover:scale-105">
-                    <img src="https://images.pexels.com/photos/3183186/pexels-photo-3183186.jpeg" alt="Networking Event"
-                        class="w-full h-52 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-2xl font-semibold text-gray-800 mb-3">Alumni Networking Night</h3>
-                        <p class="text-gray-700">Connect with fellow alumni and industry professionals to expand your
-                            network.</p>
-                        <p class="mt-2 text-gray-600 text-sm"><i class="fas fa-calendar-alt text-[#E82929]"></i> March 25,
-                            2025</p>
+                @foreach($events as $event)
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-500 hover:scale-105">
+                        <img src="{{ asset('storage/' . $event->image) }}" alt="{{ $event->title }}" class="w-full h-52 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-semibold text-gray-800 mb-3">{{ $event->title }}</h3>
+                            <p class="text-gray-700">{{ Str::limit($event->description, 100) }}</p>
+                            <p class="mt-2 text-gray-600 text-sm">
+                                <i class="fas fa-calendar-alt text-[#E82929]"></i> 
+                                {{ \Carbon\Carbon::parse($event->event_date)->format('F d, Y') }} 
+                                @if($event->event_time) 
+                                    at {{ \Carbon\Carbon::parse($event->event_time)->format('h:i A') }} 
+                                @endif
+                            </p>
+                        </div>
                     </div>
-                </div>
-
-                <!-- Event 2 -->
-                <div
-                    class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-500 hover:scale-105">
-                    <img src="https://images.pexels.com/photos/1181414/pexels-photo-1181414.jpeg" alt="Workshop"
-                        class="w-full h-52 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-2xl font-semibold text-gray-800 mb-3">Career Development Workshop</h3>
-                        <p class="text-gray-700">Learn essential career skills and insights from industry leaders.</p>
-                        <p class="mt-2 text-gray-600 text-sm"><i class="fas fa-calendar-alt text-[#E82929]"></i> April 10,
-                            2025</p>
-                    </div>
-                </div>
-
-                <!-- Event 3 -->
-                <div
-                    class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-500 hover:scale-105">
-                    <img src="https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg" alt="Charity Event"
-                        class="w-full h-52 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-2xl font-semibold text-gray-800 mb-3">Charity & Giving Back</h3>
-                        <p class="text-gray-700">Join us in making a difference by contributing to social causes.</p>
-                        <p class="mt-2 text-gray-600 text-sm"><i class="fas fa-calendar-alt text-[#E82929]"></i> May 5, 2025
-                        </p>
-                    </div>
-                </div>
+                @endforeach
             </div>
-
-            <!-- View All Events Button -->
-            <div class="mt-8">
-                <a href="#"
-                    class="bg-[#E82929] text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105 hover:bg-[#c71f1f]">
-                    View All Events
-                </a>
-            </div>
-        </div>
-    </section>
+        @endif
+    </div>
+</section>
 
 
     <!-- Gallery Slider Section -->
@@ -256,59 +270,36 @@
     </section>
 
     <!-- Blog Section -->
-    <section class="bg-gray-100 py-12">
-        <div class="container mx-auto px-6 lg:px-12">
-            <h2
-                class="text-3xl font-bold text-center text-gray-800 mb-8 transition-all duration-300 hover:text-[#E82929] hover:underline underline-offset-8">
-                Latest Blog Posts
-            </h2>
+    <div class="container mx-auto px-6 text-center">
+    <h2 class="text-4xl font-bold text-gray-800 mb-8 transition-all duration-300 hover:text-[#E82929] hover:underline underline-offset-8">
+            Latest Blogs
+        </h2>
 
-            <!-- Blog Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Blog Post 1 -->
-                <div
-                    class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-transform duration-500 hover:scale-105">
-                    <img src="https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg" alt="Alumni Networking"
-                        class="w-full h-56 object-cover">
-                    <div class="p-5">
-                        <h3 class="text-xl font-semibold text-gray-800">The Power of Alumni Networks</h3>
-                        <p class="text-gray-500 text-sm">March 12, 2025</p>
-                        <p class="text-gray-600 mt-3">Discover how alumni connections can open doors to new opportunities
-                            and strengthen professional growth.</p>
-                        <a href="#" class="text-red-600 hover:underline mt-3 inline-block">Read More →</a>
-                    </div>
-                </div>
+        <div class="grid md:grid-cols-3 gap-6 mt-6">
+            @foreach ($blogs as $blog)
+                <div class="bg-white rounded-xl shadow-lg p-4 flex flex-col">
+                    @if ($blog->image)
+                        <img src="{{ asset('storage/' . $blog->image) }}" class="rounded-lg mb-3 w-full h-48 object-cover"
+                            alt="Blog Image">
+                    @endif
 
-                <!-- Blog Post 2 -->
-                <div
-                    class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-transform duration-500 hover:scale-105">
-                    <img src="https://images.pexels.com/photos/3183179/pexels-photo-3183179.jpeg" alt="Networking Events"
-                        class="w-full h-56 object-cover">
-                    <div class="p-5">
-                        <h3 class="text-xl font-semibold text-gray-800">How to Stay Connected After Graduation</h3>
-                        <p class="text-gray-500 text-sm">March 8, 2025</p>
-                        <p class="text-gray-600 mt-3">Tips and strategies for maintaining meaningful connections with former
-                            classmates and alumni.</p>
-                        <a href="#" class="text-red-600 hover:underline mt-3 inline-block">Read More →</a>
-                    </div>
-                </div>
+                    <h3 class="text-xl font-semibold text-gray-800">{{ $blog->title }}</h3>
 
-                <!-- Blog Post 3 -->
-                <div
-                    class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-transform duration-500 hover:scale-105">
-                    <img src="https://images.pexels.com/photos/3184416/pexels-photo-3184416.jpeg" alt="Alumni Event"
-                        class="w-full h-56 object-cover">
-                    <div class="p-5">
-                        <h3 class="text-xl font-semibold text-gray-800">Networking Events That Matter</h3>
-                        <p class="text-gray-500 text-sm">March 5, 2025</p>
-                        <p class="text-gray-600 mt-3">Explore key alumni events that can help you grow both personally and
-                            professionally.</p>
-                        <a href="#" class="text-red-600 hover:underline mt-3 inline-block">Read More →</a>
-                    </div>
+                    <p class="text-gray-500 text-sm mb-2">
+                        <i class="fas fa-calendar-alt text-red-500 mr-1"></i>
+                        {{ $blog->published_at ? \Carbon\Carbon::parse($blog->published_at)->format('M d, Y') : 'Not Published' }}
+                    </p>
+
+                    <p class="text-gray-600 transition-all ease-in-out duration-300" id="blog-full-description-{{ $blog->id }}">
+                        {{ strip_tags($blog->description) }}
+                    </p>
+
+                   
                 </div>
-            </div>
+            @endforeach
         </div>
-    </section>
+       
+    </div>
 
 
 
@@ -348,6 +339,51 @@
         </div>
     </section>
 
+    <!-- All Announcements Section -->
+<section>
+    <div class="container mx-auto px-6 text-center">
+    <h2 class="text-4xl font-bold text-gray-800 mb-8 transition-all duration-300 hover:text-[#E82929] hover:underline underline-offset-8">
+        All Announcements
+    </h2>
+
+    <div class="grid md:grid-cols-3 gap-6 mt-6">
+        @foreach ($announcements as $announcement)
+        <div class="bg-white rounded-xl shadow-lg p-4">
+            <!-- Optional Image -->
+            @if ($announcement->image)
+                <img src="{{ asset('storage/' . $announcement->image) }}" class="rounded-lg mb-3 w-full h-48 object-cover" alt="Announcement Image">
+            @endif
+
+            <h3 class="text-xl font-semibold text-gray-800">{{ $announcement->title }}</h3>
+
+            <p class="text-gray-600 transition-all ease-in-out duration-300">
+                {{ strip_tags($announcement->description) }}
+            </p>
+
+            <!-- Published date -->
+            <p class="text-gray-500 text-sm">
+                <i class="fas fa-calendar-alt text-red-500 mr-1"></i>
+                {{ $announcement->published_at ? \Carbon\Carbon::parse($announcement->published_at)->format('M d, Y') : 'Not Published' }}
+            </p>
+
+            <!-- Status -->
+            <p class="text-sm text-gray-500">
+                Status: 
+                <span class="{{ $announcement->is_active ? 'text-green-500' : 'text-red-500' }}">
+                    {{ $announcement->is_active ? 'Active' : 'Inactive' }}
+                </span>
+            </p>
+
+            <!-- View Details Link -->
+            <div class="mt-4">
+                <a href="{{ route('announcements.show', $announcement->id) }}" class="text-blue-500 hover:underline">View Details</a>
+            </div>
+        </div>
+        @endforeach
+    </div>
+
+    </section>
+
     <!-- Call to Action Section -->
     <section class="relative bg-cover bg-center py-16 text-white"
         style="background-image: url('https://images.pexels.com/photos/3184439/pexels-photo-3184439.jpeg');">
@@ -363,32 +399,6 @@
                 Now</a>
         </div>
     </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     @vite(['resources/js/app.js'])
 
