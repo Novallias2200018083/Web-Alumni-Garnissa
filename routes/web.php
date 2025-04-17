@@ -41,7 +41,6 @@ Route::get('/showEvents', [EventController::class, 'front'])->name('events.front
 Route::get('/showBlogs', [BlogController::class, 'front'])->name('blogs.front');
 Route::get('/showAnnouncements', [AnnouncementController::class, 'front'])->name('announcements.front');
 Route::get('/about', [AboutController::class, 'front'])->name('about.front');
-// Route::get('/', [AlumniProfileController::class, 'front'])->name('welcome');
 
 
 
