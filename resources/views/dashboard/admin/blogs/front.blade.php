@@ -1,8 +1,8 @@
 @extends('layouts.website')
 
 @section('content')
-    <div class="container mx-auto px-6 text-center">
-    <h2 class="text-4xl font-bold text-gray-800 mb-8 transition-all duration-300 hover:text-[#E82929] hover:underline underline-offset-8">
+    <div class="container mx-auto px-6 mt-12">
+    <h2 class="text-4xl text-center font-bold text-gray-800 mb-8 transition-all duration-300 hover:text-[#E82929] hover:underline underline-offset-8">
             Latest Blogs
         </h2>
 

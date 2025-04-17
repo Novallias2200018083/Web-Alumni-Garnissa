@@ -5,6 +5,7 @@ use App\Models\Event;
 use App\Models\User;
 use App\Models\Blog; 
 use App\Models\Announcement;
+use App\Models\About;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -12,16 +13,14 @@ class HomeController extends Controller
     public function index()
     {
         // Fetch the latest 6 events
-        $events = Event::latest()->take(6)->get();
-        // Fetch the latest 6 blogs
-        $blogs = Blog::latest()->take(6)->get(); 
-        // Fetch the latest 6 announcements
-        $announcements = Announcement::latest()->take(6)->get(); 
+        $events = Event::latest()->paginate(6);
+        $blogs = Blog::latest()->paginate(6); 
+        $announcements = Announcement::latest()->paginate(6);    
 
-        // Fetch all users (or adjust based on your needs)
         $users = User::with('alumniProfile')->get();
+        $about = About::first();
 
-        return view('welcome', compact('events', 'users', 'blogs', 'announcements'));
+        return view('welcome', compact('events', 'users', 'blogs', 'announcements', 'about'));
 
     }
 

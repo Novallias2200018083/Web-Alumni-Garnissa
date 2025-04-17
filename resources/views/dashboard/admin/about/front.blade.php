@@ -34,7 +34,7 @@
                         us to stay updated on events and ways to give back to <strong
                             class="font-black text-gray-900">IST</strong>!
                     </p>
-                    <a href="#"
+                    <a href="/about"
                         class="mt-6 inline-block bg-[#E82929] text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300 hover:scale-110 hover:bg-[#c71f1f]">
                         Learn More
                     </a>
