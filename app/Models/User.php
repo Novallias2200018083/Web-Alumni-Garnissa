@@ -7,6 +7,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\EventRegistration; // <--- TAMBAHKAN INI
+use App\Models\Major;
+use Illuminate\Database\Eloquent\Relations\BelongsTo; // <--- Tambahkan ini
 
 class User extends Authenticatable
 {
@@ -15,6 +18,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'student_id', // Tambahkan ini
+        'major_id',   // Tambahkan ini
         'role',
         'password',
     ];
@@ -37,5 +42,21 @@ class User extends Authenticatable
     {
         return $this->hasOne(AlumniProfile::class);
     }
-
+    public function major(): BelongsTo
+    {
+        return $this->belongsTo(Major::class, 'major_id', 'id'); // Jika kolomnya major_id di users
+    }
+    // <--- TAMBAHKAN METHOD INI --- >
+    /**
+     * Get the event registrations for the user.
+     */
+    public function eventRegistrations()
+    {
+        return $this->hasMany(EventRegistration::class);
+    }
+    // <--- AKHIR TAMBAHKAN METHOD INI --- >
+     public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

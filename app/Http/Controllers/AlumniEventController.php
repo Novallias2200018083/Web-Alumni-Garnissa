@@ -1,66 +1,60 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AlumniEventController extends Controller
 {
+    public function __construct()
+    {
+        // Pastikan user sudah login
+        $this->middleware('auth');
+        // Hanya user dengan role 'alumni' yang bisa mengakses controller ini
+        $this->middleware('role:alumni'); // Asumsi middleware 'role' sudah dibuat dan terdaftar
+    }
+
     /**
      * Display a listing of the resource.
+     * Filter events based on audience type for the logged-in alumni.
      */
     public function index()
     {
-        $events = Event::latest()->paginate(6); 
+        $user = Auth::user();
 
+        // Mengambil event terbaru dan memfilter menggunakan scope forAlumni.
+        $events = Event::latest()
+            ->forAlumni($user) // <-- Panggil scope filter di sini!
+            ->paginate(10);     // Paginasi 6 event per halaman
+
+        // Mengirim data event ke view alumni event.
         return view('dashboard.alumni.events.index', compact('events'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
+    // Method 'create', 'store', 'show', 'edit', 'update', 'destroy' tetap kosong
+    // seperti yang Anda berikan, karena mungkin ini bukan fungsionalitas untuk alumni.
+    // Jika Anda ingin menambahkan fungsi show, Anda perlu mengimplementasikannya.
+    public function create() {}
+    public function store(Request $request) {}
     public function show(string $id)
     {
-        //
-    }
+        // Contoh implementasi method show untuk alumni
+        $user = Auth::user();
+        $event = Event::findOrFail($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        // Validasi apakah event ini relevan untuk alumni yang login
+        // Ini memastikan alumni tidak bisa melihat detail event yang tidak ditujukan padanya
+        $relevantEvents = Event::forAlumni($user)->where('id', $id)->first();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        if (!$relevantEvents) {
+            abort(403, 'Anda tidak memiliki akses untuk melihat event ini.');
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return view('dashboard.alumni.events.show', compact('event'));
     }
+    public function edit(string $id) {}
+    public function update(Request $request, string $id) {}
+    public function destroy(string $id) {}
 }

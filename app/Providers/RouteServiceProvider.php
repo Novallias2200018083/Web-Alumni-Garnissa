@@ -17,14 +17,24 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
+    public const HOME = '/home';  // Menetapkan konstanta HOME sebagai /home (bisa diubah sesuai kebutuhan)
+
+    /**
+     * Method untuk menentukan halaman utama berdasarkan peran pengguna.
+     *
+     * @return string
+     */
     public static function home()
     {
+        // Cek apakah pengguna sudah login
         if (auth()->check()) {
+            // Jika peran pengguna admin, arahkan ke dashboard admin
             return auth()->user()->role === 'admin' ? '/dashboard/admin' : '/dashboard/alumni';
         }
+        // Jika belum login, arahkan ke halaman beranda umum
         return '/';
     }
-    
+
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
      */
